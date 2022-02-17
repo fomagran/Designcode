@@ -15,12 +15,14 @@ class Menu extends React.Component {
   componentDidMount() {
     Animated.spring(this.state.top, {
       toValue: 0,
+      useNativeDriver: false,
     }).start();
   }
   //TouchableOpacity 적용하면 아이콘 터치 가능
   toggleMenu = () => {
     Animated.spring(this.state.top, {
       toValue: screenHeight,
+      useNativeDriver: false,
     }).start();
   };
 
