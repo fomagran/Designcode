@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Card from "./components/Card";
 import { NotificationIcon } from "./components/Icons";
 import Logo from "./components/Logo";
+import Course from "./components/Course";
 
 //code align alt+shift+f
 //image source ""
@@ -11,7 +12,10 @@ export default function App() {
   return (
     <Container>
       <SafeAreaView>
-        <ScrollView style={{ height: "100%" }}>
+        <ScrollView
+          style={{ height: "100%" }}
+          showsVerticalScrollIndicator={false}
+        >
           <TitleBar>
             <Avatar source={require("./assets/avatar.jpg")} />
             <Title> Welcome back, </Title>
@@ -29,12 +33,11 @@ export default function App() {
               paddingTop: 30,
             }}
             horizontal={true}
+            showsHorizontalScrollIndicator={false}
           >
-            <Logo
-              image={require("./assets/logo-framerx.png")}
-              text="Framer X"
-            />
-            <Logo image={require("./assets/logo-figma.png")} text="Figma" />
+            {logos.map((logo, index) => (
+              <Logo key={index} image={logo.image} text={logo.text} />
+            ))}
           </ScrollView>
           <SubTitle>Continue Learning</SubTitle>
           <ScrollView
@@ -42,21 +45,30 @@ export default function App() {
             style={{ paddingBottom: 30 }}
             showsHorizontalScrollIndicator={false}
           >
-            <Card
-              title="Styled Components"
-              image={require("./assets/background2.jpg")}
-              caption="React Native"
-              logo={require("./assets/logo-react.png")}
-              subTitle="5 of 12 sections"
-            />
-            <Card
-              title="Styled Components 2"
-              image={require("./assets/background1.jpg")}
-              caption="React Native"
-              logo={require("./assets/logo-react.png")}
-              subTitle="5 of 12 sections"
-            />
+            {cards.map((card, index) => (
+              <Card
+                key={index}
+                title={card.title}
+                image={card.image}
+                caption={card.caption}
+                logo={card.logo}
+                subtitle={card.subtitle}
+              />
+            ))}
           </ScrollView>
+          <SubTitle>Popular Courses</SubTitle>
+          {courses.map((course, index) => (
+            <Course
+              key={index}
+              title={course.title}
+              subtitle={course.subtitle}
+              image={course.image}
+              logo={course.logo}
+              avatar={course.avatar}
+              name={course.name}
+              caption={course.caption}
+            />
+          ))}
         </ScrollView>
       </SafeAreaView>
     </Container>
@@ -105,3 +117,101 @@ const Avatar = styled.Image`
   top: 0;
   left: 0;
 `;
+
+const logos = [
+  {
+    image: require("./assets/logo-framerx.png"),
+    text: "Framer X",
+  },
+  {
+    image: require("./assets/logo-studio.png"),
+    text: "Studio",
+  },
+  {
+    image: require("./assets/logo-react.png"),
+    text: "React",
+  },
+  {
+    image: require("./assets/logo-swift.png"),
+    text: "Swift",
+  },
+  {
+    image: require("./assets/logo-sketch.png"),
+    text: "Sketch",
+  },
+  {
+    image: require("./assets/logo-figma.png"),
+    text: "Figma",
+  },
+];
+
+const cards = [
+  {
+    title: "React Native for Designers",
+    image: require("./assets/background11.jpg"),
+    subtitle: "React Native",
+    caption: "1 of 12 sections",
+    logo: require("./assets/logo-react.png"),
+  },
+  {
+    title: "Styled Components",
+    image: require("./assets/background12.jpg"),
+    subtitle: "React Native",
+    caption: "2 of 12 sections",
+    logo: require("./assets/logo-react.png"),
+  },
+  {
+    title: "Props and Icons",
+    image: require("./assets/background13.jpg"),
+    subtitle: "React Native",
+    caption: "3 of 12 sections",
+    logo: require("./assets/logo-react.png"),
+  },
+  {
+    title: "Static Data and Loop",
+    image: require("./assets/background14.jpg"),
+    subtitle: "React Native",
+    caption: "4 of 12 sections",
+    logo: require("./assets/logo-react.png"),
+  },
+];
+
+const courses = [
+  {
+    title: "Prototype in Invision Studio",
+    subtitle: "10sections",
+    image: require("./assets/background10.jpg"),
+    logo: require("./assets/logo-studio.png"),
+    avatar: require("./assets/avatar.jpg"),
+    name: "Fomagran",
+    caption: "Design and interactive prototype ",
+  },
+  {
+    title: "React for Designers",
+    subtitle: "12sections",
+    image: require("./assets/background11.jpg"),
+    logo: require("./assets/logo-react.png"),
+    avatar: require("./assets/avatar.jpg"),
+    name: "Fomagran",
+    caption: "Design and interactive prototype ",
+  },
+  {
+    title: "Deisgn and Code with Framer X",
+    subtitle: "10sections",
+    image: require("./assets/background14.jpg"),
+    logo: require("./assets/logo-framerx.png"),
+    avatar: require("./assets/avatar.jpg"),
+    name: "Fomagran",
+    caption: "Create powerful design and code components for your app ",
+  },
+  {
+    title: "Design System in Figma",
+    subtitle: "10sections",
+    image: require("./assets/background6.jpg"),
+    logo: require("./assets/logo-figma.png"),
+    avatar: require("./assets/avatar.jpg"),
+    name: "Fomagran",
+    caption:
+      "Complete guide to designing a site using a collaborative design tool",
+  },
+];
