@@ -3,6 +3,20 @@ import styled from "styled-components";
 import { Animated, TouchableOpacity, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import MenuItem from "./MenuItem";
+import { connect } from "react-redux";
+
+function mapStateToProps(state) {
+  return { action: state.action };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    closeMenu: () =>
+      dispatch({
+        type: "CLOSE_MENU",
+      }),
+  };
+}
 
 //스크린 높이 알아내는 법
 const screenHeight = Dimensions.get("window").height;
@@ -13,17 +27,28 @@ class Menu extends React.Component {
   };
 
   componentDidMount() {
-    Animated.spring(this.state.top, {
-      toValue: 0,
-      useNativeDriver: false,
-    }).start();
+    this.toggleMenu();
   }
+
+  componentDidUpdate() {
+    this.toggleMenu();
+  }
+
   //TouchableOpacity 적용하면 아이콘 터치 가능
   toggleMenu = () => {
-    Animated.spring(this.state.top, {
-      toValue: screenHeight,
-      useNativeDriver: false,
-    }).start();
+    if (this.props.action == "openMenu") {
+      Animated.spring(this.state.top, {
+        toValue: 0,
+        useNativeDriver: false,
+      }).start();
+    }
+
+    if (this.props.action == "closeMenu") {
+      Animated.spring(this.state.top, {
+        toValue: screenHeight,
+        useNativeDriver: false,
+      }).start();
+    }
   };
 
   render() {
@@ -35,7 +60,7 @@ class Menu extends React.Component {
           <Subtitle>Designer at Design+Code</Subtitle>
         </Cover>
         <TouchableOpacity
-          onPress={this.toggleMenu}
+          onPress={this.props.closeMenu}
           style={{
             position: "absolute",
             top: 120,
@@ -63,7 +88,7 @@ class Menu extends React.Component {
   }
 }
 
-export default Menu;
+export default connect(mapStateToProps, mapDispatchToProps)(Menu);
 
 const Image = styled.Image`
     position:absolute
