@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
-import { TouchableOpacity, StatusBar } from "react-native";
+import { TouchableOpacity, StatusBar, Linking } from "react-native";
+import { WebView } from "react-native-webview";
 
 class SectionScreen extends React.Component {
   static navigationOptions = {
@@ -48,12 +49,54 @@ class SectionScreen extends React.Component {
             />
           </CloseView>
         </TouchableOpacity>
+        <Content>
+          <WebView
+            source={{ html: htmlContent + htmlStyle }}
+            scalesPageToFit={false}
+            scrollEnabled={false}
+            ref="webview"
+            //웹뷰를 해당 화면에 띄우지 않고 새로운 화면을 띄워서 이동
+            onNavigationStateChange={(event) => {
+              if (event.url != "about:blank") {
+                this.refs.webview.stopLoading();
+                Linking.openURL(event.url);
+              }
+            }}
+          />
+        </Content>
       </Container>
     );
   }
 }
 
 export default SectionScreen;
+
+const htmlContent = `
+ <h2>This is a title</h2>
+ <p>This <strong>is</strong> a <a href="http://fomagran.com">link</p>
+ <img src="https://images.ctfassets.net/ldcl3ayg0mhx/5MeVr1wNWTMMc3upyEmDBl/103f0fc3d36024d3ccb774fd660ab277/background13.jpg"/>
+`;
+
+const htmlStyle = `
+    <style>
+    * {
+        font-family:-apple-system, Roboto;
+        margin:0
+        padding:0
+    }
+
+    img {
+        width:100%;
+        border-radius:10px;
+        margin-top:20px;
+    }
+    </style>
+`;
+
+const Content = styled.View`
+  height: 100%;
+  padding: 20px;
+`;
 
 const Wrapper = styled.View`
     flex-direction:row
