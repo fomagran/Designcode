@@ -33,13 +33,17 @@ function mapDispatchToProps(dispatch) {
 //image source ""
 //한번에 똑같은 것 다 바꾸는 법 ctrl+d 후에 바꾸기
 class HomeScreen extends React.Component {
+  static navigationOptions = {
+    header: null,
+  };
+
   state = {
     scale: new Animated.Value(1),
     opacity: new Animated.Value(1),
   };
 
   componentDidMount() {
-    StatusBar.setBarStyle("dark-content", true);
+    StatusBar.setBarStyle("light-content", true);
   }
 
   componentDidUpdate() {
@@ -68,7 +72,8 @@ class HomeScreen extends React.Component {
       Animated.spring(this.state.opacity, {
         toValue: 1,
       }).start();
-      StatusBar.setBarStyle("dark-content", true);
+      //dark-content로 해야함(안드로이드에선 좀 이상해서 바꿔놓음)
+      StatusBar.setBarStyle("light-content", true);
     }
   };
 
@@ -122,14 +127,22 @@ class HomeScreen extends React.Component {
                 showsHorizontalScrollIndicator={false}
               >
                 {cards.map((card, index) => (
-                  <Card
+                  <TouchableOpacity
                     key={index}
-                    title={card.title}
-                    image={card.image}
-                    caption={card.caption}
-                    logo={card.logo}
-                    subtitle={card.subtitle}
-                  />
+                    onPress={() => {
+                      this.props.navigation.push("Section", {
+                        section: card,
+                      });
+                    }}
+                  >
+                    <Card
+                      title={card.title}
+                      image={card.image}
+                      caption={card.caption}
+                      logo={card.logo}
+                      subtitle={card.subtitle}
+                    />
+                  </TouchableOpacity>
                 ))}
               </ScrollView>
               <SubTitle>Popular Courses</SubTitle>
@@ -172,7 +185,8 @@ const SubTitle = styled.Text`
 const Container = styled.View`
   flex: 1;
   background-color: #f0f3f5;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 `;
 
 const AnimatedContainer = Animated.createAnimatedComponent(Container);
