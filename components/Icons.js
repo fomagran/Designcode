@@ -1,6 +1,6 @@
-import * as React from "react"
+import * as React from "react";
 //expo install react-natvie-svg 해줘야함
-import Svg, { G, Path, Defs, ClipPath } from "react-native-svg"
+import Svg, { G, Path, Defs, ClipPath } from "react-native-svg";
 
 export const NotificationIcon = (props) => (
   <Svg
@@ -19,4 +19,4 @@ export const NotificationIcon = (props) => (
       </ClipPath>
     </Defs>
   </Svg>
-)
+);
