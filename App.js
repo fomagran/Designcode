@@ -3,6 +3,8 @@ import { createStore } from "redux";
 import { Provider } from "react-redux";
 import HomeScreen from "./screens/HomeScreen";
 
+//test home branch
+
 const initialState = {
   action: "",
   name: "",
