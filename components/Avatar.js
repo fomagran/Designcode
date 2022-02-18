@@ -25,13 +25,14 @@ class Avatar extends React.Component {
   };
 
   componentDidMount() {
-    fetch("https://random-data-api.com/api/users/random_user")
+    fetch("https://api.github.com/users/fomagran")
       .then((res) => res.json())
       .then((res) => {
+        console.log(res)
         this.setState({
-          photo: res.avatar,
+          photo: res.avatar_url,
         });
-        this.props.updateName(res.username);
+        this.props.updateName(res.name);
       });
   }
 
