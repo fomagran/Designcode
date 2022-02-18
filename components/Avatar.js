@@ -28,7 +28,6 @@ class Avatar extends React.Component {
     fetch("https://api.github.com/users/fomagran")
       .then((res) => res.json())
       .then((res) => {
-        console.log(res)
         this.setState({
           photo: res.avatar_url,
         });
