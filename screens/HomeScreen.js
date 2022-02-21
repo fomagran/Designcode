@@ -5,6 +5,7 @@ import {
   Animated,
   Easing,
   StatusBar,
+  Platform,
 } from "react-native";
 import styled from "styled-components";
 import Card from "../components/Card";
@@ -79,6 +80,7 @@ class HomeScreen extends React.Component {
 
   componentDidMount() {
     StatusBar.setBarStyle("light-content", true);
+    if (Platform.OS == "android") StatusBar.setBarStyle("light-content", true);
   }
 
   componentDidUpdate() {
@@ -155,7 +157,7 @@ class HomeScreen extends React.Component {
                   <Logo key={index} image={logo.image} text={logo.text} />
                 ))}
               </ScrollView>
-              <SubTitle>Continue Learning</SubTitle>
+              <SubTitle>{"Continue Learning".toUpperCase()}</SubTitle>
 
               <Query query={CardsQuery}>
                 {({ loading, error, data }) => {
@@ -192,18 +194,20 @@ class HomeScreen extends React.Component {
                 }}
               </Query>
               <SubTitle>Popular Courses</SubTitle>
-              {courses.map((course, index) => (
-                <Course
-                  key={index}
-                  title={course.title}
-                  subtitle={course.subtitle}
-                  image={course.image}
-                  logo={course.logo}
-                  avatar={course.avatar}
-                  name={course.name}
-                  caption={course.caption}
-                />
-              ))}
+              <CoursesContainer>
+                {courses.map((course, index) => (
+                  <Course
+                    key={index}
+                    title={course.title}
+                    subtitle={course.subtitle}
+                    image={course.image}
+                    logo={course.logo}
+                    avatar={course.avatar}
+                    name={course.name}
+                    caption={course.caption}
+                  />
+                ))}
+              </CoursesContainer>
             </ScrollView>
           </SafeAreaView>
         </AnimatedContainer>
@@ -213,6 +217,12 @@ class HomeScreen extends React.Component {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
+
+const CoursesContainer = styled.View`
+  flex-direction:row
+  flex-wrap:wrap
+  padding-left:10
+`;
 
 const CardsContainer = styled.View``;
 const Message = styled.Text``;
